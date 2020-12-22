@@ -2,6 +2,8 @@
 
 namespace uMotif\JsonDecoder;
 
+use PhpDocReader\PhpDocReader;
+use ReflectionClass;
 use uMotif\JsonDecoder\Bindings\ArrayBinding;
 use uMotif\JsonDecoder\Bindings\DateTimeBinding;
 use uMotif\JsonDecoder\Bindings\FieldBinding;
@@ -10,8 +12,6 @@ use uMotif\JsonDecoder\Exceptions\InvalidBindingException;
 use uMotif\JsonDecoder\Exceptions\InvalidJsonException;
 use uMotif\JsonDecoder\Exceptions\JsonValueException;
 use uMotif\JsonDecoder\Exceptions\NotExistingRootException;
-use PhpDocReader\PhpDocReader;
-use ReflectionClass;
 
 class JsonDecoder
 {
@@ -227,8 +227,8 @@ class JsonDecoder
                 } else {
                     $bindings[] = new FieldBinding($propertyName, $propertyName, $propertyType);
                 }
-            } else if ($property->getDocComment()) {
-                $class = self::extractVar($property->getDocComment());
+            } elseif ($property->getDocComment()) {
+                $class      = self::extractVar($property->getDocComment(), $reflectionClass);
                 $bindings[] = new ArrayBinding($propertyName, $propertyName, $class);
             } else {
                 $bindings[] = new RawBinding($propertyName);
@@ -238,20 +238,24 @@ class JsonDecoder
         return $bindings;
     }
 
-    /**
-     * @param string $docComment
-     * @return string
-     */
-    private static function extractVar(string $docComment): string
+    private static function extractVar(string $docComment, ReflectionClass $class): string
     {
         $start = '@var ';
-        $end = '[]';
+        $end   = '[]';
 
         $ini = strpos($docComment, $start);
-        if ($ini == 0) return '';
+        if ($ini == 0) {
+            return '';
+        }
         $ini += strlen($start);
         $len = strpos($docComment, $end, $ini) - $ini;
-        return substr($docComment, $ini, $len);
+        $var = substr($docComment, $ini, $len);
+
+        if (class_exists($class->getNamespaceName() . '\\' . $var)) {
+            return $class->getNamespaceName() . '\\' . $var;
+        }
+
+        return $var;
     }
 
     /**
