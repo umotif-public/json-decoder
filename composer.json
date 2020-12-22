@@ -1,23 +1,26 @@
 {
-    "name": "karriere/json-decoder",
+    "name": "umotif/json-decoder",
     "description": "JsonDecoder implementation that allows you to convert your JSON data into PHP class objects",
-    "keywords": ["json", "decoder"],
+    "keywords": [
+        "json",
+        "decoder"
+    ],
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "Johannes Pichler",
-            "email": "johannes.pichler@karriere.at",
+            "email": "johannes.pichler@uMotif.at",
             "role": "Maintainer"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Karriere\\JsonDecoder\\": "src/"
+            "uMotif\\JsonDecoder\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Karriere\\JsonDecoder\\Tests\\": "tests/"
+            "uMotif\\JsonDecoder\\Tests\\": "tests/"
         }
     },
     "require": {

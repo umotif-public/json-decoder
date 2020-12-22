@@ -1,6 +1,6 @@
 <?php
 
-namespace Karriere\JsonDecoder\Exceptions;
+namespace uMotif\JsonDecoder\Exceptions;
 
 use Exception;
 

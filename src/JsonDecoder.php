@@ -1,14 +1,15 @@
 <?php
 
-namespace Karriere\JsonDecoder;
+namespace uMotif\JsonDecoder;
 
-use Karriere\JsonDecoder\Bindings\DateTimeBinding;
-use Karriere\JsonDecoder\Bindings\FieldBinding;
-use Karriere\JsonDecoder\Bindings\RawBinding;
-use Karriere\JsonDecoder\Exceptions\InvalidBindingException;
-use Karriere\JsonDecoder\Exceptions\InvalidJsonException;
-use Karriere\JsonDecoder\Exceptions\JsonValueException;
-use Karriere\JsonDecoder\Exceptions\NotExistingRootException;
+use uMotif\JsonDecoder\Bindings\ArrayBinding;
+use uMotif\JsonDecoder\Bindings\DateTimeBinding;
+use uMotif\JsonDecoder\Bindings\FieldBinding;
+use uMotif\JsonDecoder\Bindings\RawBinding;
+use uMotif\JsonDecoder\Exceptions\InvalidBindingException;
+use uMotif\JsonDecoder\Exceptions\InvalidJsonException;
+use uMotif\JsonDecoder\Exceptions\JsonValueException;
+use uMotif\JsonDecoder\Exceptions\NotExistingRootException;
 use PhpDocReader\PhpDocReader;
 use ReflectionClass;
 
@@ -226,12 +227,31 @@ class JsonDecoder
                 } else {
                     $bindings[] = new FieldBinding($propertyName, $propertyName, $propertyType);
                 }
+            } else if ($property->getDocComment()) {
+                $class = self::extractVar($property->getDocComment());
+                $bindings[] = new ArrayBinding($propertyName, $propertyName, $class);
             } else {
                 $bindings[] = new RawBinding($propertyName);
             }
         }
 
         return $bindings;
+    }
+
+    /**
+     * @param string $docComment
+     * @return string
+     */
+    private static function extractVar(string $docComment): string
+    {
+        $start = '@var ';
+        $end = '[]';
+
+        $ini = strpos($docComment, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($docComment, $end, $ini) - $ini;
+        return substr($docComment, $ini, $len);
     }
 
     /**

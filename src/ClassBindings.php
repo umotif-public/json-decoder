@@ -1,13 +1,13 @@
 <?php
 
-namespace Karriere\JsonDecoder;
+namespace uMotif\JsonDecoder;
 
 use Exception;
-use Karriere\JsonDecoder\Bindings\AliasBinding;
-use Karriere\JsonDecoder\Bindings\CallbackBinding;
-use Karriere\JsonDecoder\Bindings\RawBinding;
-use Karriere\JsonDecoder\Exceptions\InvalidBindingException;
-use Karriere\JsonDecoder\Exceptions\JsonValueException;
+use uMotif\JsonDecoder\Bindings\AliasBinding;
+use uMotif\JsonDecoder\Bindings\CallbackBinding;
+use uMotif\JsonDecoder\Bindings\RawBinding;
+use uMotif\JsonDecoder\Exceptions\InvalidBindingException;
+use uMotif\JsonDecoder\Exceptions\JsonValueException;
 use ReflectionProperty;
 
 class ClassBindings

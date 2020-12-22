@@ -1,6 +1,6 @@
 <?php
 
-namespace Karriere\JsonDecoder;
+namespace uMotif\JsonDecoder;
 
 interface Transformer
 {

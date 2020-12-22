@@ -1,9 +1,9 @@
 <?php
 
-namespace Karriere\JsonDecoder\Tests;
+namespace uMotif\JsonDecoder\Tests;
 
-use Karriere\JsonDecoder\Property;
-use Karriere\JsonDecoder\Tests\Fakes\Sample;
+use uMotif\JsonDecoder\Property;
+use uMotif\JsonDecoder\Tests\Fakes\Sample;
 use PHPUnit\Framework\TestCase;
 
 class PropertyTest extends TestCase

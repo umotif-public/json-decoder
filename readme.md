@@ -1,7 +1,7 @@
-<a href="https://www.karriere.at/" target="_blank"><img width="200" src="http://www.karriere.at/images/layout/katlogo.svg"></a>
+<a href="https://www.uMotif.at/" target="_blank"><img width="200" src="http://www.uMotif.at/images/layout/katlogo.svg"></a>
 <span>&nbsp;&nbsp;&nbsp;</span>
-![](https://github.com/karriereat/json-decoder/workflows/test/badge.svg)
-![](https://github.com/karriereat/json-decoder/workflows/lint/badge.svg)
+![](https://github.com/uMotifat/json-decoder/workflows/test/badge.svg)
+![](https://github.com/uMotifat/json-decoder/workflows/lint/badge.svg)
 
 # JsonDecoder for PHP
 
@@ -12,7 +12,7 @@ This package contains a JsonDecoder implementation that allows you to convert yo
 You can install the package via composer
 
 ```
-composer require karriere/json-decoder
+composer require uMotif/json-decoder
 ```
 
 ## Usage

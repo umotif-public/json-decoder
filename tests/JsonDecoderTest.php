@@ -1,19 +1,19 @@
 <?php
 
-namespace Karriere\JsonDecoder\Tests;
+namespace uMotif\JsonDecoder\Tests;
 
 use DateTime;
-use Karriere\JsonDecoder\Bindings\AliasBinding;
-use Karriere\JsonDecoder\Bindings\DateTimeBinding;
-use Karriere\JsonDecoder\Bindings\FieldBinding;
-use Karriere\JsonDecoder\ClassBindings;
-use Karriere\JsonDecoder\Exceptions\InvalidJsonException;
-use Karriere\JsonDecoder\Exceptions\NotExistingRootException;
-use Karriere\JsonDecoder\JsonDecoder;
-use Karriere\JsonDecoder\Tests\Fakes\Address;
-use Karriere\JsonDecoder\Tests\Fakes\Person;
-use Karriere\JsonDecoder\Tests\Fakes\Sample;
-use Karriere\JsonDecoder\Transformer;
+use uMotif\JsonDecoder\Bindings\AliasBinding;
+use uMotif\JsonDecoder\Bindings\DateTimeBinding;
+use uMotif\JsonDecoder\Bindings\FieldBinding;
+use uMotif\JsonDecoder\ClassBindings;
+use uMotif\JsonDecoder\Exceptions\InvalidJsonException;
+use uMotif\JsonDecoder\Exceptions\NotExistingRootException;
+use uMotif\JsonDecoder\JsonDecoder;
+use uMotif\JsonDecoder\Tests\Fakes\Address;
+use uMotif\JsonDecoder\Tests\Fakes\Person;
+use uMotif\JsonDecoder\Tests\Fakes\Sample;
+use uMotif\JsonDecoder\Transformer;
 use PHPUnit\Framework\TestCase;
 
 class JsonDecoderTest extends TestCase

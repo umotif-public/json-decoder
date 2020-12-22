@@ -1,12 +1,12 @@
 <?php
 
-namespace Karriere\JsonDecoder\Tests\Bindings;
+namespace uMotif\JsonDecoder\Tests\Bindings;
 
-use Karriere\JsonDecoder\Bindings\FieldBinding;
-use Karriere\JsonDecoder\JsonDecoder;
-use Karriere\JsonDecoder\Property;
-use Karriere\JsonDecoder\Tests\Fakes\Address;
-use Karriere\JsonDecoder\Tests\Fakes\Person;
+use uMotif\JsonDecoder\Bindings\FieldBinding;
+use uMotif\JsonDecoder\JsonDecoder;
+use uMotif\JsonDecoder\Property;
+use uMotif\JsonDecoder\Tests\Fakes\Address;
+use uMotif\JsonDecoder\Tests\Fakes\Person;
 use PHPUnit\Framework\TestCase;
 
 class FieldBindingTest extends TestCase

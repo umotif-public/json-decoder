@@ -1,10 +1,10 @@
 <?php
 
-namespace Karriere\JsonDecoder\Bindings;
+namespace uMotif\JsonDecoder\Bindings;
 
-use Karriere\JsonDecoder\Binding;
-use Karriere\JsonDecoder\JsonDecoder;
-use Karriere\JsonDecoder\Property;
+use uMotif\JsonDecoder\Binding;
+use uMotif\JsonDecoder\JsonDecoder;
+use uMotif\JsonDecoder\Property;
 
 class ArrayBinding extends Binding
 {

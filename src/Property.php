@@ -1,6 +1,6 @@
 <?php
 
-namespace Karriere\JsonDecoder;
+namespace uMotif\JsonDecoder;
 
 use Exception;
 use ReflectionProperty;

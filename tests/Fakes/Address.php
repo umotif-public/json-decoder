@@ -1,6 +1,6 @@
 <?php
 
-namespace Karriere\JsonDecoder\Tests\Fakes;
+namespace uMotif\JsonDecoder\Tests\Fakes;
 
 class Address
 {

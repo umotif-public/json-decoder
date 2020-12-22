@@ -1,15 +1,15 @@
 <?php
 
-namespace Karriere\JsonDecoder\Tests;
+namespace uMotif\JsonDecoder\Tests;
 
-use Karriere\JsonDecoder\Binding;
-use Karriere\JsonDecoder\Bindings\CallbackBinding;
-use Karriere\JsonDecoder\Bindings\FieldBinding;
-use Karriere\JsonDecoder\ClassBindings;
-use Karriere\JsonDecoder\Exceptions\InvalidBindingException;
-use Karriere\JsonDecoder\Exceptions\JsonValueException;
-use Karriere\JsonDecoder\JsonDecoder;
-use Karriere\JsonDecoder\Tests\Fakes\Person;
+use uMotif\JsonDecoder\Binding;
+use uMotif\JsonDecoder\Bindings\CallbackBinding;
+use uMotif\JsonDecoder\Bindings\FieldBinding;
+use uMotif\JsonDecoder\ClassBindings;
+use uMotif\JsonDecoder\Exceptions\InvalidBindingException;
+use uMotif\JsonDecoder\Exceptions\JsonValueException;
+use uMotif\JsonDecoder\JsonDecoder;
+use uMotif\JsonDecoder\Tests\Fakes\Person;
 use PHPUnit\Framework\TestCase;
 
 class ClassBindingsTest extends TestCase

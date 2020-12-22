@@ -1,12 +1,12 @@
 <?php
 
-namespace Karriere\JsonDecoder\Tests\Bindings;
+namespace uMotif\JsonDecoder\Tests\Bindings;
 
 use DateTime;
-use Karriere\JsonDecoder\Bindings\DateTimeBinding;
-use Karriere\JsonDecoder\JsonDecoder;
-use Karriere\JsonDecoder\Property;
-use Karriere\JsonDecoder\Tests\Fakes\Person;
+use uMotif\JsonDecoder\Bindings\DateTimeBinding;
+use uMotif\JsonDecoder\JsonDecoder;
+use uMotif\JsonDecoder\Property;
+use uMotif\JsonDecoder\Tests\Fakes\Person;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeBindingTest extends TestCase
