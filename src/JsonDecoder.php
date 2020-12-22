@@ -3,6 +3,7 @@
 namespace uMotif\JsonDecoder;
 
 use PhpDocReader\PhpDocReader;
+use PhpDocReader\PhpParser\UseStatementParser;
 use ReflectionClass;
 use uMotif\JsonDecoder\Bindings\ArrayBinding;
 use uMotif\JsonDecoder\Bindings\DateTimeBinding;
@@ -59,9 +60,9 @@ class JsonDecoder
     /**
      * Decodes the given JSON string into an instance of the given class type.
      *
-     * @param string      $json      the input JSON string
-     * @param string      $classType the class type of the decoded object
-     * @param string|null $root      the root element to decode, if not defined the whole decoded json object will be decoded
+     * @param string $json the input JSON string
+     * @param string $classType the class type of the decoded object
+     * @param string|null $root the root element to decode, if not defined the whole decoded json object will be decoded
      *
      * @return mixed the instance of the given class type
      *
@@ -78,9 +79,9 @@ class JsonDecoder
     /**
      * Decodes the given JSON string into multiple instances of the given class type.
      *
-     * @param string      $json      the input JSON string
-     * @param string      $classType the class type of the decoded objects
-     * @param string|null $root      the root element to decode, if not defined the whole decoded json object will be decoded
+     * @param string $json the input JSON string
+     * @param string $classType the class type of the decoded objects
+     * @param string|null $root the root element to decode, if not defined the whole decoded json object will be decoded
      *
      * @return array the list of instances decoded for the given class type
      *
@@ -130,9 +131,9 @@ class JsonDecoder
     /**
      * transforms the given json data by using the found transformer.
      *
-     * @param Transformer $transformer   the transformer to use
-     * @param array       $jsonArrayData the actual json data
-     * @param mixed       $instance      the class instance to bind to
+     * @param Transformer $transformer the transformer to use
+     * @param array $jsonArrayData the actual json data
+     * @param mixed $instance the class instance to bind to
      *
      * @return mixed|null
      *
@@ -154,7 +155,7 @@ class JsonDecoder
      * transforms the given data with raw bindings.
      *
      * @param mixed $jsonArrayData the actual json data
-     * @param mixed $instance      the class instance to bind to
+     * @param mixed $instance the class instance to bind to
      *
      * @return mixed|null
      *
@@ -174,7 +175,7 @@ class JsonDecoder
     /**
      * parses the given json string and eventually selects the defined root key.
      *
-     * @param string      $json the json string to parse
+     * @param string $json the json string to parse
      * @param string|null $root the optional root key
      *
      * @return mixed the json data in array format
@@ -212,7 +213,7 @@ class JsonDecoder
      */
     private function scan(string $class)
     {
-        $bindings        = [];
+        $bindings = [];
         $reflectionClass = new ReflectionClass($class);
 
         foreach ($reflectionClass->getProperties() as $property) {
@@ -220,6 +221,7 @@ class JsonDecoder
 
             $propertyName = $property->getName();
             $propertyType = $reader->getPropertyClass($property);
+            $objectClass = self::extractObjectArrayClassFromVar($property->getDocComment(), $reflectionClass);
 
             if (!is_null($propertyType)) {
                 if ($propertyType === 'DateTime') {
@@ -227,9 +229,10 @@ class JsonDecoder
                 } else {
                     $bindings[] = new FieldBinding($propertyName, $propertyName, $propertyType);
                 }
-            } elseif ($property->getDocComment()) {
-                $class      = self::extractVar($property->getDocComment(), $reflectionClass);
-                $bindings[] = new ArrayBinding($propertyName, $propertyName, $class);
+                $this->scanAndRegister($propertyType);
+            } elseif ($objectClass) {
+                $bindings[] = new ArrayBinding($propertyName, $propertyName, $objectClass);
+                $this->scanAndRegister($objectClass);
             } else {
                 $bindings[] = new RawBinding($propertyName);
             }
@@ -238,14 +241,19 @@ class JsonDecoder
         return $bindings;
     }
 
-    private static function extractVar(string $docComment, ReflectionClass $class): string
+    /**
+     * @param string $docComment
+     * @param ReflectionClass $class
+     * @return false|mixed|string
+     */
+    private static function extractObjectArrayClassFromVar(string $docComment, ReflectionClass $class)
     {
         $start = '@var ';
-        $end   = '[]';
+        $end = '[]';
 
         $ini = strpos($docComment, $start);
         if ($ini == 0) {
-            return '';
+            return false;
         }
         $ini += strlen($start);
         $len = strpos($docComment, $end, $ini) - $ini;
@@ -255,21 +263,29 @@ class JsonDecoder
             return $class->getNamespaceName() . '\\' . $var;
         }
 
+        $useStatementParser = new UseStatementParser();
+        $uses = $useStatementParser->parseUseStatements($class);
+        $loweredAlias = strtolower($var);
+
+        if (isset($uses[$loweredAlias])) {
+            return $uses[$loweredAlias];
+        }
+
         return $var;
     }
 
     /**
      * creates the transformer instance for the given class and generated bindings.
      *
-     * @param string $class    the class the transformer can handle
-     * @param array  $bindings the bindings that need to be registered
+     * @param string $class the class the transformer can handle
+     * @param array $bindings the bindings that need to be registered
      */
     private function createTransformer(string $class, array $bindings): Transformer
     {
         return new class($class, $bindings) implements Transformer {
             public function __construct($class, $bindings)
             {
-                $this->class    = $class;
+                $this->class = $class;
                 $this->bindings = $bindings;
             }
 
