@@ -220,18 +220,19 @@ class JsonDecoder
             $reader = new PhpDocReader();
 
             $propertyName = $property->getName();
+            $jsonFieldName = self::camelCaseToSnake($propertyName);
             $propertyType = $reader->getPropertyClass($property);
             $objectClass = self::extractObjectArrayClassFromVar($property->getDocComment(), $reflectionClass);
 
             if (!is_null($propertyType)) {
                 if ($propertyType === 'DateTime') {
-                    $bindings[] = new DateTimeBinding($propertyName, $propertyName);
+                    $bindings[] = new DateTimeBinding($propertyName, $jsonFieldName);
                 } else {
-                    $bindings[] = new FieldBinding($propertyName, $propertyName, $propertyType);
+                    $bindings[] = new FieldBinding($propertyName, $jsonFieldName, $propertyType);
                 }
                 $this->scanAndRegister($propertyType);
             } elseif ($objectClass) {
-                $bindings[] = new ArrayBinding($propertyName, $propertyName, $objectClass);
+                $bindings[] = new ArrayBinding($propertyName, $jsonFieldName, $objectClass);
                 $this->scanAndRegister($objectClass);
             } else {
                 $bindings[] = new RawBinding($propertyName);
@@ -239,6 +240,22 @@ class JsonDecoder
         }
 
         return $bindings;
+    }
+
+    /**
+     * @param string $camel
+     * @return string
+     */
+    private static function camelCaseToSnake(string $camel) {
+        $pattern = '!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!';
+        preg_match_all($pattern, $camel, $matches);
+        $snake = $matches[0];
+        foreach ($snake as &$match) {
+            $match = $match == strtoupper($match) ?
+                strtolower($match) :
+                lcfirst($match);
+        }
+        return implode('_', $snake);
     }
 
     /**
