@@ -1,18 +1,15 @@
-<a href="https://www.uMotif.at/" target="_blank"><img width="200" src="http://www.uMotif.at/images/layout/katlogo.svg"></a>
-<span>&nbsp;&nbsp;&nbsp;</span>
-![](https://github.com/uMotifat/json-decoder/workflows/test/badge.svg)
-![](https://github.com/uMotifat/json-decoder/workflows/lint/badge.svg)
-
-# JsonDecoder for PHP
+# JsonDecoder for PHP (uMotif fork)
 
 This package contains a JsonDecoder implementation that allows you to convert your JSON data into php class objects other than `stdclass`.
+
+The package has been extended to scan JSON data recursively and handle object arrays.
 
 ## Installation
 
 You can install the package via composer
 
 ```
-composer require uMotif/json-decoder
+composer require umotif/json-decoder
 ```
 
 ## Usage
